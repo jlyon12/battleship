@@ -1,0 +1,42 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "## Description",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack",
+    "dev": "webpack serve --open-app-name 'Firefox Developer Edition'",
+    "watch": "jest --watch ./src/js/*.js"
+  },
+  "author": "Jarrett Lyon",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "babel-jest": "^29.5.0",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.7.3",
+    "eslint": "^8.40.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.1",
+    "jest": "^29.5.0",
+    "sass": "^1.62.1",
+    "sass-loader": "^13.2.2",
+    "style-loader": "^3.3.2",
+    "webpack": "^5.84.0",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/probableactions/battleship.git"
+  },
+  "bugs": {
+    "url": "https://github.com/probableactions/battleship/issues"
+  },
+  "homepage": "https://github.com/probableactions/battleship#readme"
+}
