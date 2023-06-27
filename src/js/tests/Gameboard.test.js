@@ -9,3 +9,21 @@ test('Gameboard is 2D array of 10x10 null cells', () => {
 		expect(gameboard.board[i].every((value) => value === null)).toBeTruthy();
 	}
 });
+test('Place battleship horizontally', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0]);
+	expect(gameboard.board[0][0]).toBe('X');
+	expect(gameboard.board[0][1]).toBe('X');
+	expect(gameboard.board[0][2]).toBe('X');
+	expect(gameboard.board[0][3]).toBe('X');
+	expect(gameboard.board[0][4]).toBe('X');
+});
+test('Place battleship vertically', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0], false);
+	expect(gameboard.board[0][0]).toBe('X');
+	expect(gameboard.board[1][0]).toBe('X');
+	expect(gameboard.board[2][0]).toBe('X');
+	expect(gameboard.board[3][0]).toBe('X');
+	expect(gameboard.board[4][0]).toBe('X');
+});
