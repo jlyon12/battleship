@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import createShip from '../Ship.js';
+import createShip from '../Ship';
 
 test('Throws on invalid ship length', () => {
 	expect(() => {
