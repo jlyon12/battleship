@@ -13,6 +13,11 @@ export default function createGameboard() {
 	gameboard.placeShip = (length, originCoord = [], horizontal = true) => {
 		const [x, y] = originCoord;
 		const ship = createShip(length);
+		if (x + ship.length > 10 || x < 0)
+			throw new RangeError('Ship cannot be placed here');
+		if (y + ship.length > 10 || y < 0)
+			throw new RangeError('Ship cannot be placed here');
+
 		if (horizontal) {
 			for (let i = 0; i < ship.length; i += 1) {
 				gameboard.board[y][i + x] = 'X';
