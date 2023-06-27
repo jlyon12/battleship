@@ -31,7 +31,7 @@ test('All five battleships can be created with correct lengths', () => {
 
 test('New ships are not sunk by default', () => {
 	const ship = createShip(3);
-	expect(ship.isSunk).toBe(false);
+	expect(ship.sunk).toBe(false);
 });
 
 test('Ships can be hit', () => {
@@ -44,7 +44,7 @@ test('Ship can be sunk', () => {
 	ship.hit();
 	ship.hit();
 	ship.hit();
-	expect(ship.isSunk).toBe(true);
+	expect(ship.sunk).toBe(true);
 });
 test('Hits can not exceed ship length', () => {
 	const ship = createShip(3);

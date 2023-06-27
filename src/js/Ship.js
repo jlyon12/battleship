@@ -9,18 +9,18 @@ export default function createShip(length) {
 	}
 	ship.length = length;
 	ship.hitsTaken = 0;
-	ship.isSunk = false;
+	ship.sunk = false;
 
 	ship.hit = () => {
-		if (!ship.isSunk) {
+		if (!ship.sunk) {
 			ship.hitsTaken += 1;
 		}
-		ship.checkIfSunk();
+		ship.isSunk();
 	};
 
-	ship.checkIfSunk = () => {
+	ship.isSunk = () => {
 		if (ship.hitsTaken === ship.length) {
-			ship.isSunk = true;
+			ship.sunk = true;
 		}
 	};
 
