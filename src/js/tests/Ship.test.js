@@ -16,23 +16,41 @@ test('Throws if length !== number', () => {
 	}).toThrow(TypeError);
 });
 
-test('Carrier Ship Length is 5', () => {
+test('All five battleships can be created with correct lengths', () => {
 	const carrier = createShip(5);
-	expect(carrier.length).toBe(5);
-});
-test('Battleship Ship Length is 4', () => {
 	const battleship = createShip(4);
-	expect(battleship.length).toBe(4);
-});
-test('Detroyer Ship Length is 3', () => {
 	const detroyer = createShip(3);
-	expect(detroyer.length).toBe(3);
-});
-test('Submarine Ship Length is 3', () => {
 	const submarine = createShip(3);
-	expect(submarine.length).toBe(3);
-});
-test('Patrol Boat Length is 2', () => {
 	const patrolBoat = createShip(2);
+	expect(carrier.length).toBe(5);
+	expect(battleship.length).toBe(4);
+	expect(detroyer.length).toBe(3);
+	expect(submarine.length).toBe(3);
 	expect(patrolBoat.length).toBe(2);
+});
+
+test('New ships are not sunk by default', () => {
+	const ship = createShip(3);
+	expect(ship.isSunk).toBe(false);
+});
+
+test('Ships can be hit', () => {
+	const ship = createShip(3);
+	ship.hit();
+	expect(ship.hitsTaken).toBe(1);
+});
+test('Ship can be sunk', () => {
+	const ship = createShip(3);
+	ship.hit();
+	ship.hit();
+	ship.hit();
+	expect(ship.isSunk).toBe(true);
+});
+test('Hits can not exceed ship length', () => {
+	const ship = createShip(3);
+	ship.hit();
+	ship.hit();
+	ship.hit();
+	ship.hit();
+	expect(ship.hitsTaken).toBe(ship.length);
 });
