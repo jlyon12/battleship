@@ -27,3 +27,19 @@ test('Place battleship vertically', () => {
 	expect(gameboard.board[3][0]).toBe('X');
 	expect(gameboard.board[4][0]).toBe('X');
 });
+
+test('Throw RangeError if ship placement is out of board bounds', () => {
+	const gameboard = createGameboard();
+	expect(() => {
+		gameboard.placeShip(5, [6, 5]);
+	}).toThrow(RangeError);
+	expect(() => {
+		gameboard.placeShip(5, [-1, 5]);
+	}).toThrow(RangeError);
+	expect(() => {
+		gameboard.placeShip(5, [0, 6]);
+	}).toThrow(RangeError);
+	expect(() => {
+		gameboard.placeShip(5, [0, -1]);
+	}).toThrow(RangeError);
+});
