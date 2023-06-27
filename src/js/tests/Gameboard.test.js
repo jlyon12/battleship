@@ -43,3 +43,13 @@ test('Throw RangeError if ship placement is out of board bounds', () => {
 		gameboard.placeShip(5, [0, -1]);
 	}).toThrow(RangeError);
 });
+test('Throw Error if ship placement collides with already placed ship', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0]);
+	expect(() => {
+		gameboard.placeShip(5, [0, 0]);
+	}).toThrow(Error);
+	expect(() => {
+		gameboard.placeShip(3, [2, 0], false);
+	}).toThrow(Error);
+});
