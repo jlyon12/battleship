@@ -1,3 +1,5 @@
+import createShip from './Ship';
+
 export default function createGameboard() {
 	const gameboard = {};
 	gameboard.board = [];
@@ -8,5 +10,19 @@ export default function createGameboard() {
 		}
 	}
 
+	gameboard.placeShip = (length, originCoord = [], horizontal = true) => {
+		const [x, y] = originCoord;
+		const ship = createShip(length);
+		if (horizontal) {
+			for (let i = 0; i < ship.length; i += 1) {
+				gameboard.board[y][i + x] = 'X';
+			}
+		}
+		if (!horizontal) {
+			for (let i = 0; i < ship.length; i += 1) {
+				gameboard.board[i + y][x] = 'X';
+			}
+		}
+	};
 	return gameboard;
 }
