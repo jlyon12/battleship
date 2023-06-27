@@ -8,18 +8,18 @@ export default function createShip(length) {
 		throw new RangeError('Battleships must be 2, 3, 4, or 5 length');
 	}
 	ship.length = length;
-	ship.hitsTaken = 0;
+	ship.damage = 0;
 	ship.sunk = false;
 
 	ship.hit = () => {
 		if (!ship.sunk) {
-			ship.hitsTaken += 1;
+			ship.damage += 1;
 		}
 		ship.isSunk();
 	};
 
 	ship.isSunk = () => {
-		if (ship.hitsTaken === ship.length) {
+		if (ship.damage === ship.length) {
 			ship.sunk = true;
 		}
 	};

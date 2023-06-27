@@ -37,7 +37,7 @@ test('New ships are not sunk by default', () => {
 test('Ships can be hit', () => {
 	const ship = createShip(3);
 	ship.hit();
-	expect(ship.hitsTaken).toBe(1);
+	expect(ship.damage).toBe(1);
 });
 test('Ship can be sunk', () => {
 	const ship = createShip(3);
@@ -52,5 +52,5 @@ test('Hits can not exceed ship length', () => {
 	ship.hit();
 	ship.hit();
 	ship.hit();
-	expect(ship.hitsTaken).toBe(ship.length);
+	expect(ship.damage).toBe(ship.length);
 });
