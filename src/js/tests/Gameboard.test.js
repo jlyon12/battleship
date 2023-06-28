@@ -148,3 +148,36 @@ test('Sunk ships are tracked in an array', () => {
 	gameboard.receiveAttack([0, 4]);
 	expect(gameboard.sunkShips.length).toBe(1);
 });
+test('Gameboard reports all ships as sunk', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0]);
+	gameboard.placeShip(4, [0, 1]);
+	gameboard.placeShip(3, [0, 2]);
+	gameboard.placeShip(3, [0, 3]);
+	gameboard.placeShip(2, [0, 4]);
+	// Ship 1
+	gameboard.receiveAttack([0, 0]);
+	gameboard.receiveAttack([1, 0]);
+	gameboard.receiveAttack([2, 0]);
+	gameboard.receiveAttack([3, 0]);
+	gameboard.receiveAttack([4, 0]);
+	// Ship 2
+	gameboard.receiveAttack([0, 1]);
+	gameboard.receiveAttack([1, 1]);
+	gameboard.receiveAttack([2, 1]);
+	gameboard.receiveAttack([3, 1]);
+	// Ship 3
+	gameboard.receiveAttack([0, 2]);
+	gameboard.receiveAttack([1, 2]);
+	gameboard.receiveAttack([2, 2]);
+	// Ship 4
+	gameboard.receiveAttack([0, 3]);
+	gameboard.receiveAttack([1, 3]);
+	gameboard.receiveAttack([2, 3]);
+	// Ship 5
+	gameboard.receiveAttack([0, 4]);
+	gameboard.receiveAttack([1, 4]);
+
+	expect(gameboard.sunkShips.length).toBe(5);
+	expect(gameboard.allShipsSunk).toBe(true);
+});

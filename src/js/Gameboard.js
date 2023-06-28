@@ -7,6 +7,7 @@ export default function createGameboard() {
 	gameboard.sunkShips = [];
 	gameboard.missedAttacks = [];
 	gameboard.successfulAttacks = [];
+	gameboard.allShipsSunk = false;
 
 	for (let i = 0; i < 10; i += 1) {
 		gameboard.board[i] = [];
@@ -66,6 +67,9 @@ export default function createGameboard() {
 			hitShip.hit();
 			if (hitShip.sunk === true) {
 				gameboard.sunkShips.push(hitShip);
+			}
+			if (gameboard.sunkShips.length === 5) {
+				gameboard.allShipsSunk = true;
 			}
 		}
 	};
