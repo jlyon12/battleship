@@ -10,7 +10,7 @@ export default function createShip(length) {
 	ship.length = length;
 	ship.damage = 0;
 	ship.sunk = false;
-
+	ship.cells = new Set();
 	ship.hit = () => {
 		if (!ship.sunk) {
 			ship.damage += 1;
