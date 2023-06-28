@@ -34,7 +34,7 @@ export default function createGameboard() {
 						throw new Error('Ship placement collides with another ship');
 					}
 					gameboard.board[y][i + x] = 'X';
-					ship.cells.add(String([y, i + x]));
+					ship.cells.add(String([x + i, y]));
 				}
 			}
 			if (!horizontal) {
@@ -42,8 +42,9 @@ export default function createGameboard() {
 					if (gameboard.board[i + y][x] !== null) {
 						throw new Error('Ship placement collides with another ship');
 					}
+
 					gameboard.board[i + y][x] = 'X';
-					ship.cells.add(String([i + y, x]));
+					ship.cells.add(String([x, i + y]));
 				}
 			}
 		}
@@ -51,13 +52,13 @@ export default function createGameboard() {
 
 	gameboard.receiveAttack = (coord = []) => {
 		const [x, y] = coord;
-		if (gameboard.board[x][y] === null) {
+		if (gameboard.board[y][x] === null) {
 			gameboard.missedAttacks.push(coord);
-			gameboard.board[x][y] = 'M';
+			gameboard.board[y][x] = 'M';
 		}
-		if (gameboard.board[x][y] === 'X') {
+		if (gameboard.board[y][x] === 'X') {
 			gameboard.successfulAttacks.push(coord);
-			gameboard.board[x][y] = 'H';
+			gameboard.board[y][x] = 'H';
 			const hitShipIndex = gameboard.ships.findIndex((ship) =>
 				ship.cells.has(String(coord))
 			);

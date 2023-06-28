@@ -120,23 +120,31 @@ test('Missed attacks are shown on the board', () => {
 
 test('Ships are considered sunk when enough successful hits have occurred', () => {
 	const gameboard = createGameboard();
+	// Vertical position
 	gameboard.placeShip(5, [0, 0], false);
 	const ship = gameboard.ships[0];
 	gameboard.receiveAttack([0, 0]);
-	gameboard.receiveAttack([1, 0]);
-	gameboard.receiveAttack([2, 0]);
-	gameboard.receiveAttack([3, 0]);
-	gameboard.receiveAttack([4, 0]);
+	gameboard.receiveAttack([0, 1]);
+	gameboard.receiveAttack([0, 2]);
+	gameboard.receiveAttack([0, 3]);
+	gameboard.receiveAttack([0, 4]);
+	// Horizontal position
+	gameboard.placeShip(3, [4, 4]);
+	const ship2 = gameboard.ships[1];
+	gameboard.receiveAttack([4, 4]);
+	gameboard.receiveAttack([5, 4]);
+	gameboard.receiveAttack([6, 4]);
 	expect(ship.sunk).toBe(true);
+	expect(ship2.sunk).toBe(true);
 });
 
 test('Sunk ships are tracked in an array', () => {
 	const gameboard = createGameboard();
 	gameboard.placeShip(5, [0, 0], false);
 	gameboard.receiveAttack([0, 0]);
-	gameboard.receiveAttack([1, 0]);
-	gameboard.receiveAttack([2, 0]);
-	gameboard.receiveAttack([3, 0]);
-	gameboard.receiveAttack([4, 0]);
+	gameboard.receiveAttack([0, 1]);
+	gameboard.receiveAttack([0, 2]);
+	gameboard.receiveAttack([0, 3]);
+	gameboard.receiveAttack([0, 4]);
 	expect(gameboard.sunkShips.length).toBe(1);
 });
