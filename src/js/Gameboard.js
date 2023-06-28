@@ -20,11 +20,17 @@ export default function createGameboard() {
 
 		if (horizontal) {
 			for (let i = 0; i < ship.length; i += 1) {
+				if (gameboard.board[y][i + x] !== null) {
+					throw new Error('Ship placement collides with another ship');
+				}
 				gameboard.board[y][i + x] = 'X';
 			}
 		}
 		if (!horizontal) {
 			for (let i = 0; i < ship.length; i += 1) {
+				if (gameboard.board[i + y][x] !== null) {
+					throw new Error('Ship placement collides with another ship');
+				}
 				gameboard.board[i + y][x] = 'X';
 			}
 		}
