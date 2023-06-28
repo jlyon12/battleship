@@ -89,6 +89,13 @@ test("Successful attacks increase hit ship's damage count", () => {
 	expect(ship.damage).toBe(1);
 });
 
+test('Successful attacks appear on the board', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0]);
+	gameboard.receiveAttack([0, 0]);
+	expect(gameboard.board[0][0]).toBe('H');
+});
+
 test('Missed attack is stored in missed array', () => {
 	const gameboard = createGameboard();
 	gameboard.placeShip(5, [0, 0], false);
@@ -102,6 +109,13 @@ test("Missed attacks do not affect ship's damage count", () => {
 	const ship = gameboard.ships[0];
 	gameboard.receiveAttack([1, 1]);
 	expect(ship.damage).toBe(0);
+});
+
+test('Missed attacks are shown on the board', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0], false);
+	gameboard.receiveAttack([9, 9]);
+	expect(gameboard.board[9][9]).toBe('M');
 });
 
 test('Ships are considered sunk when enough successful hits have occurred', () => {
