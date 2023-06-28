@@ -28,6 +28,25 @@ test('Place battleship vertically', () => {
 	expect(gameboard.board[4][0]).toBe('X');
 });
 
+test('Placed ships are stored in  array', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0], false);
+	expect(gameboard.ships.length).toBe(1);
+});
+
+test('A board can have a maximum of 5 ships', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0], false);
+	gameboard.placeShip(4, [1, 0], false);
+	gameboard.placeShip(3, [2, 0], false);
+	gameboard.placeShip(3, [3, 0], false);
+	gameboard.placeShip(2, [4, 0], false);
+	expect(() => {
+		gameboard.placeShip(2, [5, 0], false);
+	}).toThrow(Error);
+	expect(gameboard.ships.length).toBe(5);
+});
+
 test('Throw RangeError if ship placement is out of board bounds', () => {
 	const gameboard = createGameboard();
 	expect(() => {
@@ -43,6 +62,7 @@ test('Throw RangeError if ship placement is out of board bounds', () => {
 		gameboard.placeShip(5, [0, -1]);
 	}).toThrow(RangeError);
 });
+
 test('Throw Error if ship placement collides with already placed ship', () => {
 	const gameboard = createGameboard();
 	gameboard.placeShip(5, [0, 0]);
@@ -54,26 +74,55 @@ test('Throw Error if ship placement collides with already placed ship', () => {
 	}).toThrow(Error);
 });
 
+test('Successful attack is stored in successful array', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0], false);
+	gameboard.receiveAttack([0, 0]);
+	expect(gameboard.successfulAttacks.length).toBe(1);
+});
+
 test("Successful attacks increase hit ship's damage count", () => {
 	const gameboard = createGameboard();
-	const battleship = gameboard.placeShip(5, [0, 0]);
+	gameboard.placeShip(5, [0, 0]);
+	const ship = gameboard.ships[0];
 	gameboard.receiveAttack([0, 0]);
-	expect(battleship.damage).toBe(1);
+	expect(ship.damage).toBe(1);
 });
+
+test('Missed attack is stored in missed array', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0], false);
+	gameboard.receiveAttack([9, 9]);
+	expect(gameboard.missedAttacks.length).toBe(1);
+});
+
 test("Missed attacks do not affect ship's damage count", () => {
 	const gameboard = createGameboard();
-	const battleship = gameboard.placeShip(5, [0, 0]);
+	gameboard.placeShip(5, [0, 0]);
+	const ship = gameboard.ships[0];
 	gameboard.receiveAttack([1, 1]);
-	expect(battleship.damage).toBe(0);
+	expect(ship.damage).toBe(0);
 });
+
 test('Ships are considered sunk when enough successful hits have occurred', () => {
 	const gameboard = createGameboard();
-	const battleship = gameboard.placeShip(5, [0, 0]);
+	gameboard.placeShip(5, [0, 0], false);
+	const ship = gameboard.ships[0];
 	gameboard.receiveAttack([0, 0]);
 	gameboard.receiveAttack([1, 0]);
 	gameboard.receiveAttack([2, 0]);
 	gameboard.receiveAttack([3, 0]);
 	gameboard.receiveAttack([4, 0]);
-	expect(battleship.damage).toBe(5);
-	expect(battleship.sunk).toBe(true);
+	expect(ship.sunk).toBe(true);
+});
+
+test('Sunk ships are tracked in an array', () => {
+	const gameboard = createGameboard();
+	gameboard.placeShip(5, [0, 0], false);
+	gameboard.receiveAttack([0, 0]);
+	gameboard.receiveAttack([1, 0]);
+	gameboard.receiveAttack([2, 0]);
+	gameboard.receiveAttack([3, 0]);
+	gameboard.receiveAttack([4, 0]);
+	expect(gameboard.sunkShips.length).toBe(1);
 });
