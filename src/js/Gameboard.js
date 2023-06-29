@@ -5,8 +5,8 @@ export default function createGameboard() {
 	gameboard.board = [];
 	gameboard.ships = [];
 	gameboard.sunkShips = [];
-	gameboard.missedAttacks = [];
-	gameboard.successfulAttacks = [];
+	gameboard.missedAttacks = new Set();
+	gameboard.successfulAttacks = new Set();
 	gameboard.allShipsSunk = false;
 
 	for (let i = 0; i < 10; i += 1) {
@@ -54,11 +54,11 @@ export default function createGameboard() {
 	gameboard.receiveAttack = (coord = []) => {
 		const [x, y] = coord;
 		if (gameboard.board[y][x] === null) {
-			gameboard.missedAttacks.push(coord);
+			gameboard.missedAttacks.add(String(coord));
 			gameboard.board[y][x] = 'M';
 		}
 		if (gameboard.board[y][x] === 'X') {
-			gameboard.successfulAttacks.push(coord);
+			gameboard.successfulAttacks.add(String(coord));
 			gameboard.board[y][x] = 'H';
 			const hitShipIndex = gameboard.ships.findIndex((ship) =>
 				ship.cells.has(String(coord))

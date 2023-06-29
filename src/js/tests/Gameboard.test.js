@@ -74,11 +74,11 @@ test('Throw Error if ship placement collides with already placed ship', () => {
 	}).toThrow(Error);
 });
 
-test('Successful attack is stored in successful array', () => {
+test('Successful attack is stored in a set', () => {
 	const gameboard = createGameboard();
 	gameboard.placeShip(5, [0, 0], false);
 	gameboard.receiveAttack([0, 0]);
-	expect(gameboard.successfulAttacks.length).toBe(1);
+	expect(gameboard.successfulAttacks.has('0,0')).toBe(true);
 });
 
 test("Successful attacks increase hit ship's damage count", () => {
@@ -96,11 +96,11 @@ test('Successful attacks appear on the board', () => {
 	expect(gameboard.board[0][0]).toBe('H');
 });
 
-test('Missed attack is stored in missed array', () => {
+test('Missed attack is stored in a set', () => {
 	const gameboard = createGameboard();
 	gameboard.placeShip(5, [0, 0], false);
 	gameboard.receiveAttack([9, 9]);
-	expect(gameboard.missedAttacks.length).toBe(1);
+	expect(gameboard.missedAttacks.has('9,9')).toBe(true);
 });
 
 test("Missed attacks do not affect ship's damage count", () => {
