@@ -24,12 +24,9 @@ export default function createGameboard() {
 			const ship = createShip(length);
 			gameboard.ships.push(ship);
 
-			if (x + ship.length > 10 || x < 0)
-				throw new RangeError('Ship cannot be placed here');
-			if (y + ship.length > 10 || y < 0)
-				throw new RangeError('Ship cannot be placed here');
-
 			if (horizontal) {
+				if (x + ship.length > 10 || x < 0 || y < 0 || y >= 10)
+					throw new RangeError('Ship cannot be placed here');
 				for (let i = 0; i < ship.length; i += 1) {
 					if (gameboard.board[y][i + x] !== null) {
 						throw new Error('Ship placement collides with another ship');
@@ -39,6 +36,8 @@ export default function createGameboard() {
 				}
 			}
 			if (!horizontal) {
+				if (y + ship.length > 10 || y < 0 || x < 0 || x >= 10)
+					throw new RangeError('Ship cannot be placed here');
 				for (let i = 0; i < ship.length; i += 1) {
 					if (gameboard.board[i + y][x] !== null) {
 						throw new Error('Ship placement collides with another ship');
