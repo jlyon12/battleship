@@ -7,8 +7,7 @@ const gameState = (() => {
 	const computer = createPlayer('Computer');
 	const playerBoard = createGameboard();
 	const computerBoard = createGameboard();
-
-	display.createPlayerBoard();
-	display.createComputerBoard();
+	display.renderPlayerBoard(playerBoard);
+	display.renderComputerBoard(computerBoard);
 })();
 export default gameState;

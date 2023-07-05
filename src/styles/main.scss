@@ -32,5 +32,14 @@
 		&__cell {
 			border: 1px solid lightgray;
 		}
+		.ship {
+			background-color: rgb(65, 65, 65);
+		}
+		.hit {
+			background-color: rgb(188, 88, 88);
+		}
+		.miss {
+			background-color: rgb(95, 190, 230);
+		}
 	}
 }
