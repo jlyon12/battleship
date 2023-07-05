@@ -8,6 +8,13 @@ export default function createGameboard() {
 	gameboard.missedAttacks = new Set();
 	gameboard.successfulAttacks = new Set();
 	gameboard.allShipsSunk = false;
+	gameboard.shipTypes = [
+		{ name: 'Carrier', length: 5 },
+		{ name: 'Battleship', length: 4 },
+		{ name: 'Cruiser', length: 3 },
+		{ name: 'Submarine', length: 3 },
+		{ name: 'Destroyer', length: 2 },
+	];
 
 	for (let i = 0; i < 10; i += 1) {
 		gameboard.board[i] = [];
