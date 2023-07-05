@@ -29,5 +29,8 @@
 		border: 1px solid black;
 		display: grid;
 		grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+		&__cell {
+			border: 1px solid lightgray;
+		}
 	}
 }
