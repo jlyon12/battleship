@@ -10,7 +10,26 @@
     </title>
 </head>
 
-<body>
+<body class="page-wrapper">
+    <header class="header">
+        <h1 class="header__title">Battleship</h1>
+    </header>
+    <main class="main">
+        <div class="main__controls">
+            <button class="btn" id="startGame">Start Game</button>
+            <button class="btn" id="rotate">Rotate</button>
+
+            <button class="btn" id="newGame">New Game</button>
+        </div>
+        <div class="main__game">
+            <div class="main__board" id="playerBoard"></div>
+            <div class="main__board" id="computerBoard"></div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p class="footer__text">Created by <a href="http://www.github.com/probableactions"
+                class="footer__link">probableactions</a></p>
+    </footer>
 
 </body>
 

@@ -1,0 +1,33 @@
+.page-wrapper {
+	min-height: 100vh;
+	display: grid;
+	align-content: space-around;
+	text-align: center;
+}
+
+.main {
+	display: grid;
+	grid-template-areas: 'controls' 'game';
+	place-content: center;
+	gap: 50px;
+	&__controls {
+		grid-area: controls;
+		display: grid;
+		grid-auto-flow: column;
+		place-content: space-around;
+	}
+	&__game {
+		grid-area: game;
+		display: grid;
+		grid-auto-flow: column;
+		place-content: center;
+		gap: 50px;
+	}
+	&__board {
+		width: 420px;
+		height: 420px;
+		border: 1px solid black;
+		display: grid;
+		grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+	}
+}
