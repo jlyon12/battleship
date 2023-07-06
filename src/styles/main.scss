@@ -7,9 +7,13 @@
 
 .main {
 	display: grid;
-	grid-template-areas: 'controls' 'game';
+	grid-template-areas: 'text' 'controls' 'game';
 	place-content: center;
 	gap: 50px;
+	&__game-text {
+		grid-area: text;
+		font-size: 1.5rem;
+	}
 	&__controls {
 		grid-area: controls;
 		display: grid;
