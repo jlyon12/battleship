@@ -181,3 +181,8 @@ test('Gameboard reports all ships as sunk', () => {
 	expect(gameboard.sunkShips.length).toBe(5);
 	expect(gameboard.allShipsSunk).toBe(true);
 });
+test('Randomized board has 5 ships', () => {
+	const board = createGameboard();
+	board.randomizeShips();
+	expect(board.ships.length).toBe(5);
+});
