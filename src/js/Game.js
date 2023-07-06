@@ -41,8 +41,12 @@ const gameState = (() => {
 		}
 	};
 	const playerTurn = (attackCoords) => {
-		player.attack(attackCoords, computerBoard);
-		display.renderComputerBoard(computerBoard);
+		try {
+			player.attack(attackCoords, computerBoard);
+			display.renderComputerBoard(computerBoard);
+		} catch (error) {
+			alert(error.message);
+		}
 	};
 	const computerTurn = () => {
 		computer.randomAttack(playerBoard);
