@@ -3,22 +3,35 @@ import createGameboard from './Gameboard';
 import display from './Display';
 
 const gameState = (() => {
-	const player = createPlayer('Player');
-	const computer = createPlayer('Computer');
-	const playerBoard = createGameboard();
-	const computerBoard = createGameboard();
+	let player = createPlayer('Player');
+	let computer = createPlayer('Computer');
+	let playerBoard = createGameboard();
+	let computerBoard = createGameboard();
 
 	let activePlayer = player;
 	let gameOver = false;
-	let winner;
+	let winner = null;
+	const resetGame = () => {
+		let playerName = prompt('What is your name?');
+		if (!playerName) playerName = 'Player';
+		player = createPlayer(playerName);
+		computer = createPlayer('Computer');
+		playerBoard = createGameboard();
+		computerBoard = createGameboard();
+
+		activePlayer = player;
+		gameOver = false;
+		winner = null;
+		playerBoard.randomizeShips();
+		computerBoard.randomizeShips();
+
+		display.renderPlayerBoard(playerBoard);
+		display.renderComputerBoard(computerBoard);
+	};
 
 	// TODO: Allow player to place own ships
-	playerBoard.placeShip(5, [0, 0]);
-	playerBoard.placeShip(4, [6, 2], false);
-	playerBoard.placeShip(3, [7, 7]);
-	playerBoard.placeShip(3, [0, 7]);
-	playerBoard.placeShip(2, [4, 4], false);
 
+	playerBoard.randomizeShips();
 	computerBoard.randomizeShips();
 
 	display.renderPlayerBoard(playerBoard);
@@ -75,6 +88,7 @@ const gameState = (() => {
 
 	return {
 		playRound,
+		resetGame,
 	};
 })();
 export default gameState;
