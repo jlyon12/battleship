@@ -29,7 +29,6 @@ export default function createGameboard() {
 			throw new Error(`A board cannot contain more than 5 ships`);
 		else {
 			const ship = createShip(length);
-			gameboard.ships.push(ship);
 
 			if (horizontal) {
 				if (x + ship.length > 10 || x < 0 || y < 0 || y >= 10)
@@ -53,6 +52,36 @@ export default function createGameboard() {
 					gameboard.board[i + y][x] = 'X';
 					ship.cells.add(String([x, i + y]));
 				}
+			}
+			gameboard.ships.push(ship);
+		}
+	};
+	gameboard.randomizeShips = () => {
+		if (gameboard.ships.length >= 5) return;
+		const originCoord = getRandomCoord();
+		const orientation = getRandomOrientation();
+		try {
+			while (gameboard.ships.length < 5) {
+				if (gameboard.ships.length === 0) {
+					gameboard.placeShip(5, originCoord, orientation);
+				}
+				if (gameboard.ships.length === 1) {
+					gameboard.placeShip(4, originCoord, orientation);
+				}
+				if (gameboard.ships.length === 2) {
+					gameboard.placeShip(3, originCoord, orientation);
+				}
+				if (gameboard.ships.length === 3) {
+					gameboard.placeShip(3, originCoord, orientation);
+				}
+				if (gameboard.ships.length === 4) {
+					gameboard.placeShip(2, originCoord, orientation);
+				}
+				gameboard.randomizeShips();
+			}
+		} catch {
+			while (gameboard.ships.length < 5) {
+				gameboard.randomizeShips();
 			}
 		}
 	};
@@ -81,3 +110,16 @@ export default function createGameboard() {
 	};
 	return gameboard;
 }
+const getRandomCoord = () => {
+	const possibleCoords = [];
+	for (let i = 0; i < 10; i += 1) {
+		for (let j = 0; j < 10; j += 1) {
+			possibleCoords.push([i, j]);
+		}
+	}
+	return possibleCoords[Math.floor(Math.random() * possibleCoords.length)];
+};
+const getRandomOrientation = () => {
+	const number = Math.random() * 1;
+	return number >= 0.5;
+};

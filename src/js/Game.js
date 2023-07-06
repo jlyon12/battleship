@@ -18,12 +18,8 @@ const gameState = (() => {
 	playerBoard.placeShip(3, [7, 7]);
 	playerBoard.placeShip(3, [0, 7]);
 	playerBoard.placeShip(2, [4, 4], false);
-	// TODO: Randomize computer ship positions
-	computerBoard.placeShip(5, [0, 0]);
-	computerBoard.placeShip(4, [6, 2], false);
-	computerBoard.placeShip(3, [7, 7]);
-	computerBoard.placeShip(3, [0, 7]);
-	computerBoard.placeShip(2, [4, 4], false);
+
+	computerBoard.randomizeShips();
 
 	display.renderPlayerBoard(playerBoard);
 	display.renderComputerBoard(computerBoard);
