@@ -23,32 +23,64 @@ export default function createGameboard() {
 		}
 	}
 
-	gameboard.placeShip = (length, originCoord = [], horizontal = true) => {
+	const calculatePlacement = (length, originCoord, horizontal = true) => {
 		const [x, y] = originCoord;
+		const shipCells = [];
+		if (horizontal) {
+			for (let i = 0; i < length; i += 1) {
+				shipCells.push([x + i, y]);
+			}
+		}
+		if (!horizontal) {
+			for (let i = 0; i < length; i += 1) {
+				shipCells.push([x, i + y]);
+			}
+		}
+		return shipCells;
+	};
+
+	const validateShipPlacement = (shipCells) => {
+		const validateRange = (rangeCells) => {
+			const validateXArray = rangeCells.every(
+				(cell) => cell[0] >= 0 && cell[0] < 10
+			);
+			const validateYArray = rangeCells.every(
+				(cell) => cell[1] >= 0 && cell[1] < 10
+			);
+			return validateXArray && validateYArray;
+		};
+		const validateNoCollision = (collisionCells) => {
+			const checkedCells = [];
+			collisionCells.forEach((cell) => {
+				const [x, y] = cell;
+				checkedCells.push(gameboard.board[y][x] === null);
+			});
+			return checkedCells.every((cell) => cell === true);
+		};
+
+		if (!validateRange(shipCells)) {
+			throw new RangeError('Ship placement is out of bounds');
+		}
+		if (!validateNoCollision(shipCells)) {
+			throw new Error('Ship placement collides with another ship');
+		}
+	};
+	gameboard.placeShip = (length, originCoord = [], horizontal = true) => {
 		if (gameboard.ships.length >= 5)
 			throw new Error(`A board cannot contain more than 5 ships`);
 		else {
+			const newPlacement = calculatePlacement(length, originCoord, horizontal);
+			validateShipPlacement(newPlacement);
+			const [x, y] = originCoord;
 			const ship = createShip(length);
-
 			if (horizontal) {
-				if (x + ship.length > 10 || x < 0 || y < 0 || y >= 10)
-					throw new RangeError('Ship cannot be placed here');
 				for (let i = 0; i < ship.length; i += 1) {
-					if (gameboard.board[y][i + x] !== null) {
-						throw new Error('Ship placement collides with another ship');
-					}
 					gameboard.board[y][i + x] = 'X';
 					ship.cells.add(String([x + i, y]));
 				}
 			}
 			if (!horizontal) {
-				if (y + ship.length > 10 || y < 0 || x < 0 || x >= 10)
-					throw new RangeError('Ship cannot be placed here');
 				for (let i = 0; i < ship.length; i += 1) {
-					if (gameboard.board[i + y][x] !== null) {
-						throw new Error('Ship placement collides with another ship');
-					}
-
 					gameboard.board[i + y][x] = 'X';
 					ship.cells.add(String([x, i + y]));
 				}
