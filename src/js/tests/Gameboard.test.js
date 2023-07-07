@@ -186,3 +186,13 @@ test('Randomized board has 5 ships', () => {
 	board.randomizeShips();
 	expect(board.ships.length).toBe(5);
 });
+test('Randomized board has 5 ships with correct lengths', () => {
+	const board = createGameboard();
+	board.randomizeShips();
+	expect(board.ships.length).toBe(5);
+	expect(board.placedShipTypes.has('Carrier')).toBe(true);
+	expect(board.placedShipTypes.has('Battleship')).toBe(true);
+	expect(board.placedShipTypes.has('Cruiser')).toBe(true);
+	expect(board.placedShipTypes.has('Submarine')).toBe(true);
+	expect(board.placedShipTypes.has('Destroyer')).toBe(true);
+});

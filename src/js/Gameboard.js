@@ -15,6 +15,7 @@ export default function createGameboard() {
 		{ name: 'Submarine', length: 3 },
 		{ name: 'Destroyer', length: 2 },
 	];
+	gameboard.placedShipTypes = new Set();
 
 	for (let i = 0; i < 10; i += 1) {
 		gameboard.board[i] = [];
@@ -93,23 +94,12 @@ export default function createGameboard() {
 		const originCoord = getRandomCoord();
 		const orientation = getRandomOrientation();
 		try {
-			while (gameboard.ships.length < 5) {
-				if (gameboard.ships.length === 0) {
-					gameboard.placeShip(5, originCoord, orientation);
+			for (let i = 0; i < 5; i += 1) {
+				const currentShip = gameboard.shipTypes[i];
+				if (!gameboard.placedShipTypes.has(currentShip.name)) {
+					gameboard.placeShip(currentShip.length, originCoord, orientation);
+					gameboard.placedShipTypes.add(currentShip.name);
 				}
-				if (gameboard.ships.length === 1) {
-					gameboard.placeShip(4, originCoord, orientation);
-				}
-				if (gameboard.ships.length === 2) {
-					gameboard.placeShip(3, originCoord, orientation);
-				}
-				if (gameboard.ships.length === 3) {
-					gameboard.placeShip(3, originCoord, orientation);
-				}
-				if (gameboard.ships.length === 4) {
-					gameboard.placeShip(2, originCoord, orientation);
-				}
-				gameboard.randomizeShips();
 			}
 		} catch {
 			while (gameboard.ships.length < 5) {
@@ -140,6 +130,7 @@ export default function createGameboard() {
 			}
 		}
 	};
+
 	return gameboard;
 }
 const getRandomCoord = () => {
