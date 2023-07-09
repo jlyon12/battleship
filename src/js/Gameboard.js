@@ -24,7 +24,7 @@ export default function createGameboard() {
 		}
 	}
 
-	const calculatePlacement = (length, originCoord, horizontal = true) => {
+	gameboard.calculatePlacement = (length, originCoord, horizontal = true) => {
 		const [x, y] = originCoord;
 		const shipCells = [];
 		if (horizontal) {
@@ -39,54 +39,71 @@ export default function createGameboard() {
 		}
 		return shipCells;
 	};
+	const validateRange = (rangeCells) => {
+		const validateXArray = rangeCells.every(
+			(cell) => cell[0] >= 0 && cell[0] < 10
+		);
+		const validateYArray = rangeCells.every(
+			(cell) => cell[1] >= 0 && cell[1] < 10
+		);
+		return validateXArray && validateYArray;
+	};
+	const validateNoCollision = (collisionCells) => {
+		const checkedCells = [];
+		collisionCells.forEach((cell) => {
+			const [x, y] = cell;
+			checkedCells.push(gameboard.board[y][x] === null);
+		});
+		return checkedCells.every((cell) => cell === true);
+	};
 
 	const validateShipPlacement = (shipCells) => {
-		const validateRange = (rangeCells) => {
-			const validateXArray = rangeCells.every(
-				(cell) => cell[0] >= 0 && cell[0] < 10
-			);
-			const validateYArray = rangeCells.every(
-				(cell) => cell[1] >= 0 && cell[1] < 10
-			);
-			return validateXArray && validateYArray;
-		};
-		const validateNoCollision = (collisionCells) => {
-			const checkedCells = [];
-			collisionCells.forEach((cell) => {
-				const [x, y] = cell;
-				checkedCells.push(gameboard.board[y][x] === null);
-			});
-			return checkedCells.every((cell) => cell === true);
-		};
-
 		if (!validateRange(shipCells)) {
 			throw new RangeError('Ship placement is out of bounds');
+			return false;
 		}
 		if (!validateNoCollision(shipCells)) {
 			throw new Error('Ship placement collides with another ship');
+			return false;
 		}
+		return true;
+	};
+
+	gameboard.isValidPlacement = (shipCells) => {
+		if (!validateRange(shipCells)) {
+			return false;
+		}
+		if (!validateNoCollision(shipCells)) {
+			return false;
+		}
+		return true;
 	};
 	gameboard.placeShip = (length, originCoord = [], horizontal = true) => {
 		if (gameboard.ships.length >= 5)
 			throw new Error(`A board cannot contain more than 5 ships`);
 		else {
-			const newPlacement = calculatePlacement(length, originCoord, horizontal);
-			validateShipPlacement(newPlacement);
-			const [x, y] = originCoord;
-			const ship = createShip(length);
-			if (horizontal) {
-				for (let i = 0; i < ship.length; i += 1) {
-					gameboard.board[y][i + x] = 'X';
-					ship.cells.add(String([x + i, y]));
+			const newPlacement = gameboard.calculatePlacement(
+				length,
+				originCoord,
+				horizontal
+			);
+			if (validateShipPlacement(newPlacement)) {
+				const [x, y] = originCoord;
+				const ship = createShip(length);
+				if (horizontal) {
+					for (let i = 0; i < ship.length; i += 1) {
+						gameboard.board[y][i + x] = 'X';
+						ship.cells.add(String([x + i, y]));
+					}
 				}
-			}
-			if (!horizontal) {
-				for (let i = 0; i < ship.length; i += 1) {
-					gameboard.board[i + y][x] = 'X';
-					ship.cells.add(String([x, i + y]));
+				if (!horizontal) {
+					for (let i = 0; i < ship.length; i += 1) {
+						gameboard.board[i + y][x] = 'X';
+						ship.cells.add(String([x, i + y]));
+					}
 				}
+				gameboard.ships.push(ship);
 			}
-			gameboard.ships.push(ship);
 		}
 	};
 	gameboard.randomizeShips = () => {
