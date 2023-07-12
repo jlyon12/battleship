@@ -25,7 +25,6 @@ const gameState = (() => {
 		gameOver = false;
 		winner = null;
 		computerBoard.randomizeShips();
-		display.renderPlayerBoard(playerBoard);
 		display.renderComputerBoard(computerBoard);
 	};
 

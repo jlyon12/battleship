@@ -1,10 +1,8 @@
 import gameState from './Game';
 import display from './Display';
 
-const playerBoard = document.getElementById('playerBoard');
-const computerBoard = document.getElementById('computerBoard');
-const rotateBtn = document.getElementById('rotate');
-const newGameBtn = document.getElementById('newGame');
+const { playerBoard, computerBoard, placementBoard, rotateBtn, newGameBtn } =
+	display;
 
 let direction = true;
 let shipCount = gameState.getPlayerBoard().ships.length;
@@ -32,7 +30,7 @@ const handlePlayerShipHover = (e) => {
 		.calculatePlacement(currentShip.length, originCoord, direction);
 	const isValid = gameState.getPlayerBoard().isValidPlacement(placementCells);
 
-	const playerBoardCells = playerBoard.children;
+	const placementBoardCells = placementBoard.children;
 	const validCellStrings = [];
 	const invalidCellStrings = [];
 	if (isValid) {
@@ -47,18 +45,20 @@ const handlePlayerShipHover = (e) => {
 			invalidCellStrings.push(test);
 		});
 	}
-	for (let i = 0; i < playerBoardCells.length; i += 1) {
-		playerBoardCells[i].classList.remove('valid-placement');
-		playerBoardCells[i].classList.remove('invalid-placement');
-		const valid = validCellStrings.includes(playerBoardCells[i].dataset.coord);
+	for (let i = 0; i < placementBoardCells.length; i += 1) {
+		placementBoardCells[i].classList.remove('valid-placement');
+		placementBoardCells[i].classList.remove('invalid-placement');
+		const valid = validCellStrings.includes(
+			placementBoardCells[i].dataset.coord
+		);
 		const invalid = invalidCellStrings.includes(
-			playerBoardCells[i].dataset.coord
+			placementBoardCells[i].dataset.coord
 		);
 		if (valid) {
-			playerBoardCells[i].classList.add('valid-placement');
+			placementBoardCells[i].classList.add('valid-placement');
 		}
 		if (invalid) {
-			playerBoardCells[i].classList.add('invalid-placement');
+			placementBoardCells[i].classList.add('invalid-placement');
 		}
 	}
 };
@@ -72,18 +72,26 @@ const handlePlayerShipPlacement = (e) => {
 	gameState
 		.getPlayerBoard()
 		.placeShip(currentShip.length, originCoord, direction);
-	display.renderPlayerBoard(gameState.getPlayerBoard());
+	display.renderPlacementBoard(gameState.getPlayerBoard());
+	if (gameState.getPlayerBoard().ships.length === 5) {
+		placementBoard.classList.add('hidden');
+		playerBoard.classList.remove('hidden');
+		computerBoard.classList.remove('hidden');
+		display.renderPlayerBoard(gameState.getPlayerBoard());
+	}
 };
-
+window.addEventListener('load', () => {
+	display.renderPlacementBoard(gameState.getPlayerBoard());
+});
 newGameBtn.addEventListener('click', gameState.resetGame);
 
 rotateBtn.addEventListener('click', changeDirection);
 
-playerBoard.addEventListener('mouseover', (e) => {
+placementBoard.addEventListener('mouseover', (e) => {
 	handlePlayerShipHover(e);
 });
 
-playerBoard.addEventListener('click', (e) => {
+placementBoard.addEventListener('click', (e) => {
 	handlePlayerShipPlacement(e);
 });
 
