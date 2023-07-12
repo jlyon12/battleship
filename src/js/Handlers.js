@@ -1,8 +1,15 @@
 import gameState from './Game';
 import display from './Display';
 
-const { playerBoard, computerBoard, placementBoard, rotateBtn, newGameBtn } =
-	display;
+const {
+	playerBoard,
+	computerBoard,
+	placementBoard,
+	startBtn,
+	rotateBtn,
+	newGameBtn,
+	gameText,
+} = display;
 
 let direction = true;
 let shipCount = gameState.getPlayerBoard().ships.length;
@@ -12,6 +19,23 @@ const changeDirection = () => {
 	direction === true ? (direction = false) : (direction = true);
 };
 
+const handleStart = () => {
+	startBtn.classList.add('hidden');
+	placementBoard.classList.remove('hidden');
+	rotateBtn.classList.remove('hidden');
+	gameText.classList.remove('hidden');
+};
+
+const handleNewGame = () => {
+	playerBoard.classList.add('hidden');
+	computerBoard.classList.add('hidden');
+	newGameBtn.classList.add('hidden');
+	rotateBtn.classList.remove('hidden');
+	placementBoard.classList.remove('hidden');
+	gameState.resetGame();
+	display.renderPlacementBoard(gameState.getPlayerBoard());
+	display.renderShipPlacementText();
+};
 const handlePlayerAttack = (e) => {
 	if (gameState.getPlayerBoard().ships.length === 5) {
 		const dataArray = Array.from(e.target.dataset.coord);
@@ -77,24 +101,39 @@ const handlePlayerShipPlacement = (e) => {
 		placementBoard.classList.add('hidden');
 		playerBoard.classList.remove('hidden');
 		computerBoard.classList.remove('hidden');
+		rotateBtn.classList.add('hidden');
+		newGameBtn.classList.remove('hidden');
 		display.renderPlayerBoard(gameState.getPlayerBoard());
+		display.renderShipPlacementText();
 	}
 };
-window.addEventListener('load', () => {
+startBtn.addEventListener('click', () => {
+	handleStart();
 	display.renderPlacementBoard(gameState.getPlayerBoard());
 });
-newGameBtn.addEventListener('click', gameState.resetGame);
+newGameBtn.addEventListener('click', handleNewGame);
 
 rotateBtn.addEventListener('click', changeDirection);
 
 placementBoard.addEventListener('mouseover', (e) => {
 	handlePlayerShipHover(e);
+	display.renderShipPlacementText(currentShip);
 });
 
 placementBoard.addEventListener('click', (e) => {
-	handlePlayerShipPlacement(e);
+	try {
+		handlePlayerShipPlacement(e);
+	} catch (error) {
+		display.renderErrorMessage(error);
+	}
 });
 
 computerBoard.addEventListener('click', (e) => {
-	handlePlayerAttack(e);
+	try {
+		handlePlayerAttack(e);
+	} catch (error) {
+		display.renderErrorMessage(error);
+	}
 });
+
+playerBoard.addEventListener('click', display.renderFriendlyFireMessage);

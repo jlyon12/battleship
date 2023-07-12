@@ -15,7 +15,6 @@ const gameState = (() => {
 	display.renderComputerBoard(computerBoard);
 
 	const getPlayerBoard = () => playerBoard;
-
 	const resetGame = () => {
 		player = createPlayer('Player');
 		computer = createPlayer('Computer');
@@ -39,16 +38,13 @@ const gameState = (() => {
 				computerTurn();
 				alternateTurn();
 			}
+			display.renderEnemyShipsRemainingText(computerBoard);
 			checkForWinner();
 		}
 	};
 	const playerTurn = (attackCoords) => {
-		try {
-			player.attack(attackCoords, computerBoard);
-			display.renderComputerBoard(computerBoard);
-		} catch (error) {
-			alert(error.message);
-		}
+		player.attack(attackCoords, computerBoard);
+		display.renderComputerBoard(computerBoard);
 	};
 	const computerTurn = () => {
 		computer.randomAttack(playerBoard);
@@ -64,19 +60,13 @@ const gameState = (() => {
 		if (computerBoard.allShipsSunk) {
 			winner = player;
 			gameOver = true;
-			handleGameOver();
+			display.renderPlayerWinnerText(winner);
 		}
 		if (playerBoard.allShipsSunk) {
 			winner = computer;
 			gameOver = true;
-			handleGameOver();
+			display.renderPlayerLoserText(winner);
 		}
-	};
-
-	const handleGameOver = () => {
-		setTimeout(() => {
-			alert(`Game over ${winner.name} has won!`);
-		}, 500);
 	};
 
 	return {
