@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Battleship
+    </title>
+<script defer src="main.bundle.js"></script></head>
+
+<body class="page-wrapper">
+    <header class="header">
+        <h1 class="header__title">Battleship</h1>
+    </header>
+    <main class="main">
+        <p class="main__game-text hidden" id="gameText">This is a game</p>
+        <div class="main__controls">
+            <button class="btn" id="startGame">Start Game</button>
+            <button class="btn hidden" id="rotate">Rotate</button>
+
+            <button class="btn hidden" id="newGame">New Game</button>
+        </div>
+        <div class="main__game">
+            <div class="main__board hidden" id="placementBoard"></div>
+            <div class="main__board hidden" id="playerBoard"></div>
+            <div class="main__board hidden" id="computerBoard"></div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p class="footer__text">Created by <a href="http://www.github.com/probableactions"
+                class="footer__link">probableactions</a></p>
+    </footer>
+
+</body>
+
+</html>
