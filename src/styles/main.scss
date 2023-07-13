@@ -1,8 +1,32 @@
+@font-face {
+	font-display: swap;
+	font-family: 'Bebas Neue';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../assets/fonts/bebas-neue-v10-latin-regular.woff2') format('woff2');
+}
+$ff-primary: 'Bebas Neue', system-ui;
+$clr-background: #0a2144;
+$clr-text: #cccccc;
+$clr-board-water: #163b66;
+$clr-board-ship: #c1cfda;
+$clr-board-valid: #c1cfda;
+$clr-board-invalid: #941c2f;
+$clr-board-miss: #6196c6;
+$clr-board-hit: #941c2f;
+
 .page-wrapper {
-	min-height: 100vh;
 	display: grid;
 	align-content: space-around;
 	text-align: center;
+	background-color: $clr-background;
+	color: $clr-text;
+	font-family: $ff-primary;
+
+	letter-spacing: 0.05rem;
+}
+.header {
+	font-size: 2rem;
 }
 
 .main {
@@ -10,6 +34,7 @@
 	grid-template-areas: 'text' 'controls' 'game';
 	place-content: center;
 	gap: 50px;
+	grid-template-rows: min-content, min-content, 1fr;
 	&__game-text {
 		grid-area: text;
 		font-size: 1.5rem;
@@ -19,6 +44,17 @@
 		display: grid;
 		grid-auto-flow: column;
 		place-content: space-around;
+		.btn {
+			appearance: none;
+			font-size: 1.25rem;
+			border-radius: 10px;
+			padding: 0.5rem;
+			background-color: $clr-text;
+			color: $clr-board-water;
+		}
+		.btn:hover {
+			background-color: $clr-board-miss;
+		}
 	}
 	&__game {
 		grid-area: game;
@@ -28,29 +64,41 @@
 		gap: 50px;
 	}
 	&__board {
-		width: 420px;
 		height: 420px;
-		border: 1px solid black;
+		width: 420px;
+		border: 1px solid $clr-board-water;
 		display: grid;
 		grid-template: repeat(10, 1fr) / repeat(10, 1fr);
 		&__cell {
-			border: 1px solid lightgray;
+			background-color: $clr-board-water;
+			border: 1px solid #0a2144;
 		}
 		.ship {
-			background-color: rgb(65, 65, 65);
+			background-color: $clr-board-ship;
 		}
 		.hit {
-			background-color: rgb(188, 88, 88);
+			background-color: $clr-board-hit;
 		}
 		.miss {
-			background-color: rgb(95, 190, 230);
+			background-color: $clr-board-miss;
 		}
 		.valid-placement {
-			background-color: rgb(95, 230, 111);
+			background-color: $clr-board-valid;
 		}
 		.invalid-placement {
-			background-color: rgb(230, 163, 95);
+			background-color: $clr-board-invalid;
 		}
+	}
+}
+
+.footer {
+	font-size: 1.125rem;
+	&__link {
+		text-decoration: none;
+		color: $clr-board-miss;
+	}
+	&__link:hover {
+		color: $clr-text;
 	}
 }
 .hidden {
