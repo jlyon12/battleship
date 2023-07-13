@@ -1,4 +1,4 @@
-# Battlship
+# Battleship
 
 ## Description
 
@@ -6,7 +6,13 @@
 
 ## Getting Started
 
+<a href="https://probableactions.github.io/battleship/" target="_blank"> Live Link </a> 👈🏻
+<br/>
+
 ## Version History
+
+- 1.0 - Initial Release
+  - Basic implementation to meet the project requirements. Only works via desktop browsers.
 
 ## License
 
