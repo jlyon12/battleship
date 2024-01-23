@@ -6,7 +6,7 @@
 
 ## Getting Started
 
-<a href="https://probableactions.github.io/battleship/" target="_blank"> Live Link </a> 👈🏻
+<a href="https://jlyon12.github.io/battleship/" target="_blank"> Live Link </a> 👈🏻
 <br/>
 
 ## Version History
